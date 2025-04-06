@@ -42,12 +42,12 @@ Key components include:
 
 ## Usage
 
-1.  **Clone/Download:** Place these Terraform files (`main.tf`, `variables.tf`, `providers.tf`, `denied_perms.tf`, `terraform.example.tfvars`) and the `profiles/` directory (containing `billing.json`, `networking.json`, `securitycenter.json`) in your working directory.
+1.  **Clone/Download:** Place these Terraform files (`main.tf`, `variables.tf`, `providers.tf`, `denied_perms.tf`, `terraform.tfvars.example`) and the `profiles/` directory (containing `billing.json`, `networking.json`, `securitycenter.json`) in your working directory.
 2.  **Update `main.tf` Tag IDs:** **Replace the placeholder tag key ID and tag value ID** in the `google_iam_deny_policy.top_level_deny` resource's `denial_condition` block with your actual tag IDs created in the prerequisites step.
 3.  **Prepare Variables File:**
-    * Rename the example variables file:
+    * Copy the example variables file to the name Terraform automatically loads (`terraform.tfvars`):
       ```bash
-      cp terraform.example.tfvars terraform.tfvars
+      cp terraform.tfvars.example terraform.tfvars
       ```
     * Edit the new `terraform.tfvars` file.
     * **Replace all placeholder values** (like `123456789012`, `987654321098`, group emails `...@example.com`) with your actual Organization ID, target Folder ID (`folder_id`), and principal group emails/identifiers for the exceptions.
