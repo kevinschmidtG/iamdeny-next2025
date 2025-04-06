@@ -35,31 +35,36 @@ Key components include:
 5.  **Target Folder ID:** The ID of the specific Google Cloud Folder (`folder_id`) where folder-level policies will be applied.
 6.  **Tag Setup:** You need to create a suitable tag (e.g., `iam_deny=enabled`) within your Google Cloud organization. Obtain the specific numeric IDs for the Tag Key and Tag Value.
     * **Crucially, you must replace the placeholder tag key ID and tag value ID** in the `google_iam_deny_policy.top_level_deny` resource within your `main.tf` file with your actual IDs. Look for the `resource.matchTagId(...)` expression.
-7.  **Permission Files:** Ensure the following JSON files exist in the `./profiles/` directory relative to your `main.tf`:
-    * `billing.json`
-    * `networking.json`
-    * `securitycenter.json`
+7.  **Permission Files:** The required profile JSON files (`billing.json`, `networking.json`, `securitycenter.json`) are located within the `/terraform/profiles/` directory of this repository.
 
 ## Usage
 
-1.  **Clone/Download:** Place these Terraform files (`main.tf`, `variables.tf`, `providers.tf`, `denied_perms.tf`, `terraform.tfvars.example`) and the `profiles/` directory (containing `billing.json`, `networking.json`, `securitycenter.json`) in your working directory.
-2.  **Update `main.tf` Tag IDs:** **Replace the placeholder tag key ID and tag value ID** in the `google_iam_deny_policy.top_level_deny` resource's `denial_condition` block with your actual tag IDs created in the prerequisites step.
-3.  **Prepare Variables File:**
-    * Copy the example variables file to the name Terraform automatically loads (`terraform.tfvars`):
+1.  **Clone Repository:** Clone this repository to your local machine.
+    ```bash
+     git clone https://github.com/kevinschmidtG/iamdeny-next2025
+    ```
+2.  **Navigate to Directory:** Change into the Terraform directory within the cloned repository.
+    ```bash
+    cd terraform
+    ```
+    *(All subsequent commands should be run from this `/terraform` directory)*
+3.  **Update `main.tf` Tag IDs:** **Replace the placeholder tag key ID and tag value ID** in the `main.tf` file within the `google_iam_deny_policy.top_level_deny` resource's `denial_condition` block with your actual tag IDs created in the prerequisites step.
+4.  **Prepare Variables File:**
+    * Copy the example variables file (`terraform.tfvars.example`) to the name Terraform automatically loads (`terraform.tfvars`):
       ```bash
       cp terraform.tfvars.example terraform.tfvars
       ```
     * Edit the new `terraform.tfvars` file.
     * **Replace all placeholder values** (like `123456789012`, `987654321098`, group emails `...@example.com`) with your actual Organization ID, target Folder ID (`folder_id`), and principal group emails/identifiers for the exceptions.
-4.  **Initialize Terraform:**
+5.  **Initialize Terraform:**
     ```bash
     terraform init
     ```
-5.  **Review Plan:** Terraform will automatically load variables from `terraform.tfvars`.
+6.  **Review Plan:** Terraform will automatically load variables from `terraform.tfvars`.
     ```bash
     terraform plan
     ```
-6.  **Apply Configuration:**
+7.  **Apply Configuration:**
     ```bash
     terraform apply
     ```
@@ -105,6 +110,17 @@ No outputs are defined in this configuration.
 | Name                | Source                                                     | Version |
 | ------------------- | ---------------------------------------------------------- | ------- |
 | gcp_org_policy_v2 | terraform-google-modules/org-policy/google//modules/org_policy_v2 | ~> 5.3.0 |
+
+## Related Modules & Concepts
+
+### Privileged Access Management (PAM)
+
+This repository focuses on preventative controls using IAM Deny and Organization Policies. For managing temporary, just-in-time elevated access (which might be needed for principals requiring exceptions to these policies), consider using a Privileged Access Management approach.
+
+Google Cloud provides a reference implementation for PAM using Terraform:
+* **terraform-google-pam:** [https://github.com/GoogleCloudPlatform/terraform-google-pam/tree/main](https://github.com/GoogleCloudPlatform/terraform-google-pam/tree/main)
+
+This PAM module was intentionally not included as part of this configuration, as it addresses a different (though related) aspect of access control and is typically implemented separately based on specific operational needs for managing temporary elevation.
 
 ## License
 
