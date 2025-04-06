@@ -36,7 +36,7 @@ resource "google_iam_deny_policy" "top_level_deny" {
       denied_principals = ["principalSet://goog/public:all"]
       denial_condition {
         title      = "Match IAM Deny Tag"
-        expression = "resource.matchTagId('tagKeys/281482384217710', 'tagValues/281477230819536')" #Tag=iam_deny, value=enabled 
+        expression = "resource.matchTagId('tagKeys/*', 'tagValues/*')" #Tag=iam_deny, value=enabled 
       }
       denied_permissions   = local.project_admin_perms_deny
       exception_principals = local.top_exception_principals
@@ -46,7 +46,7 @@ resource "google_iam_deny_policy" "top_level_deny" {
 
 #Profile specific IAM Deny Policy  
 resource "google_iam_deny_policy" "profile-deny-policy" {
-  parent       = urlencode("${var.iamdeny_folder_path}${var.iamdeny_folder_id}") #attach at folder level
+  parent       = urlencode("${var.folder_path}${var.folder_id}") #attach at folder level
   name         = "profile-iam-deny-policy"
   display_name = "Profile Specific IAM Deny Policy"
   rules {
@@ -104,7 +104,7 @@ module "gcp_org_policy_v2" {
   version = "~> 5.3.0"
 
   policy_root         = "folder"                               # either of organization, folder or project
-  policy_root_id      = var.iamdeny_folder_id                  # either of org id, folder id or project id
+  policy_root_id      = var.folder_id                  # either of org id, folder id or project id
   constraint          = "gcp.restrictServiceUsage" # constraint identifier without constriants/ prefix. Example "compute.requireOsLogin"
   policy_type         = "list"
   inherit_from_parent = "false" # either of list or boolean

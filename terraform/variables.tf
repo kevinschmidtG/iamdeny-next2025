@@ -24,7 +24,7 @@ variable "region" {
   default     = "us-central1"
 }
 
-variable "iamdeny_folder_path" {
+variable "folder_path" {
   type    = string
   default = "cloudresourcemanager.googleapis.com/folders/"
 }
@@ -35,7 +35,7 @@ variable "org_id" {
   default     = "" #Update your default Org here
 }
 
-variable "iamdeny_folder_id" {
+variable "folder_id" {
   description = "The folder ID to place the policy within."
   type        = string
   default     = "" #Update your default folder here
@@ -44,7 +44,6 @@ variable "iamdeny_folder_id" {
 variable "networking_exception_principals" {
   type        = list(string)
   description = "The id of the google group associated with your networking team. Follows the format principalSet://goog/group/GROUP_EMAIL_ADDRESS" #https://cloud.google.com/iam/docs/principal-identifiers for wider syntax
-  default     = [""]
 }
 
 variable "billing_exception_principals" {
@@ -62,5 +61,5 @@ variable "sec_exception_principals" {
 variable "top_exception_principals" {
   type        = list(string)
   description = "A list of excluded principals from an IAM Deny Policy. Follows the format principalSet://goog/group/GROUP_EMAIL_ADDRESS"
-  default = []
+  # default = []
 }
