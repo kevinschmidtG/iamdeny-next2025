@@ -18,20 +18,20 @@ folder_id = "987654321098" # Replace with the numeric ID of the folder where pro
 # You can add multiple principals to each list if needed.
 
 networking_exception_principals = [
-  "principalSet://goog/group/gcp-network-admins@example.com"
+  #"principalSet://goog/group/gcp-network-admins@example.com"
   # "principalSet://goog/user/individual-user@example.com" # Example of adding a user
 ]
 
 billing_exception_principals = [
-  "principalSet://goog/group/gcp-billing-admins@example.com"
+  #"principalSet://goog/group/gcp-billing-admins@example.com"
 ]
 
 sec_exception_principals = [
-  "principalSet://goog/group/gcp-security-admins@example.com"
+ # "principalSet://goog/group/gcp-security-admins@example.com"
 ]
 
 top_exception_principals = [
-  "principalSet://goog/group/gcp-organization-admins@example.com",
+  #"principalSet://goog/group/gcp-organization-admins@example.com",
   # "principalSet://goog/group/gcp-breakglass-admins@example.com" # Example of adding another group
 ]
 
