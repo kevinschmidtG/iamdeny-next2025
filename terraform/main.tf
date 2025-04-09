@@ -90,13 +90,25 @@ resource "google_iam_deny_policy" "profile-deny-policy" {
   }
 }
 
-resource "google_org_policy_custom_constraint" "constraint" {
-  name           = "custom.denyRole"
+resource "google_org_policy_custom_constraint" "deny_owner" {
+  name           = "custom.denyOwner"
   parent         = "organizations/${var.org_id}"
   action_type    = "DENY"
   condition      = "resource.bindings.exists(binding, RoleNameMatches(binding.role, ['roles/owner']))" #limits granting of legacy "owner" role
   method_types   = ["CREATE", "UPDATE"]
   resource_types = ["iam.googleapis.com/AllowPolicy"]
+}
+
+resource "google_org_policy_policy" "bool" {
+
+  name   = "organizations/${var.org_id}/policies/${google_org_policy_custom_constraint.deny_owner.name}"
+  parent = "organizations/${var.org_id}"
+
+  spec {
+    rules {
+      enforce = "TRUE"
+    }
+  }
 }
 
 module "gcp_org_policy_v2" {
