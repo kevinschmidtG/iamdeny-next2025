@@ -59,7 +59,7 @@ resource "google_iam_deny_policy" "profile-deny-policy" {
         expression = "!resource.matchTag('*/*', '*')"
       }
       denied_permissions   = local.security_policy.deniedPermissions
-      exception_principals = local.security_exception_principals
+      exception_principals = concat(local.top_exception_principals, local.security_exception_principals) #except for those we want 
     }
   }
   rules {
@@ -72,7 +72,7 @@ resource "google_iam_deny_policy" "profile-deny-policy" {
         expression = "!resource.matchTag('*/*', '*')"
       }
       denied_permissions   = local.billing_policy.deniedPermissions
-      exception_principals = local.billing_exception_principals #except for those we want
+      exception_principals = concat(local.top_exception_principals, local.billing_exception_principals) #except for those we want
     }
   }
   rules {
@@ -85,7 +85,7 @@ resource "google_iam_deny_policy" "profile-deny-policy" {
         expression = "!resource.matchTag('*/*', '*')"
       }
       denied_permissions   = local.networking_policy.deniedPermissions
-      exception_principals = local.networking_exception_principals #except for those we want
+      exception_principals = concat(local.top_exception_principals, local.networking_exception_principals) #except for those we want
     }
   }
 }
