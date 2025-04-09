@@ -32,13 +32,11 @@ variable "folder_path" {
 variable "org_id" {
   description = "Your Organizations ID"
   type        = string
-  default     = "" #Update your default Org here
 }
 
 variable "folder_id" {
   description = "The folder ID to place the policy within."
   type        = string
-  default     = "" #Update your default folder here
 }
 
 variable "networking_exception_principals" {
@@ -49,17 +47,16 @@ variable "networking_exception_principals" {
 variable "billing_exception_principals" {
   type        = list(string)
   description = "The id of the google group associated with your billing team. Follows the format principalSet://goog/group/GROUP_EMAIL_ADDRESS"
-  default     = [""]
 }
 
 variable "sec_exception_principals" {
   type        = list(string)
   description = "A list of excluded principals from an IAM Deny Policy. Follows the format principalSet://goog/group/GROUP_EMAIL_ADDRESS"
-  default     = [""]
 }
 
 variable "top_exception_principals" {
   type        = list(string)
   description = "A list of excluded principals from an IAM Deny Policy. Follows the format principalSet://goog/group/GROUP_EMAIL_ADDRESS"
+  default     = []
   # default = []
 }
